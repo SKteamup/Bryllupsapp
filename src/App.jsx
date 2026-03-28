@@ -6168,7 +6168,6 @@ const [currentUser, setCurrentUser] = useState(() => {
   useEffect(() => {
     // Show the app immediately — demo data is already set as default state.
     // Then hydrate from storage in the background if saved data exists.
-    setLoaded(true);
 
     const hydrate = async () => {
       // 1. localStorage først (rask)
@@ -6208,7 +6207,7 @@ const [currentUser, setCurrentUser] = useState(() => {
       } catch(e) { console.error("Supabase hydrate error:", e); }
     };
 
-    hydrate();
+    hydrate().then(() => setLoaded(true));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   /* ─── SAVE ON EVERY CHANGE (200ms debounce) ─── */
