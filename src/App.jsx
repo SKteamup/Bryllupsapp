@@ -6030,7 +6030,9 @@ export default function App() {
   const [loaded,      setLoaded]      = useState(false);
   const [page,        setPage]        = useState("home");
   const [mode,        setMode]        = useState("planner");
-  const [currentUser, setCurrentUser] = useState(null);
+const [currentUser, setCurrentUser] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("bryllup3:currentUser")) || null; } catch { return null; }
+  });
   const [selVendorId, setSelVendorId] = useState(null);
   const [drawer,      setDrawer]      = useState(false);
   const [toast,       setToast]       = useState(null);
@@ -6305,6 +6307,7 @@ export default function App() {
           user = {...user, weddingId: newWeddingData.id};
         }
         setCurrentUser(user);
+        localStorage.setItem("bryllup3:currentUser", JSON.stringify(user));
         if (user.role==="vendor") {
           setSelVendorId(user.vendorId);
           setMode("vendor");
