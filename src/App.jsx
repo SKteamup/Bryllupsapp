@@ -1,7 +1,7 @@
 import React, {
   useState, useEffect, useCallback, useMemo, useRef
 } from "react";
-
+import { supabase } from './supabaseClient';
 /* ═══════════════════════════════════════════════════════════
    DESIGN SYSTEM — CSS
 ═══════════════════════════════════════════════════════════ */
@@ -6169,49 +6169,41 @@ export default function App() {
     setLoaded(true);
 
     const hydrate = async () => {
-      const setters = {
-        weddings: setWeddings, users: setUsers
-      };
-      const keys = Object.keys(setters);
-
-      // Try localStorage first (synchronous-ish, most reliable)
-      let foundAny = false;
+      // 1. localStorage først (rask)
       try {
-        for (const k of keys) {
-          try {
-            const raw = localStorage.getItem("bryllup3:"+k);
-            if (raw) {
-              const parsed = JSON.parse(raw);
-              if (k === "weddings") {
-                // Always keep demo wedding fresh — never trust localStorage for it
-                setWeddings(() => ({...parsed, [DEMO_WEDDING_ID]: DEMO_WDATA}));
-              } else if (k === "users") {
-                // Demo users always come from DEMO_USERS — append any extra registered users
-                const custom = parsed.filter(u => !DEMO_USER_IDS.has(u.id));
-                setUsers([...DEMO_USERS, ...custom]);
-              } else {
-                setters[k](parsed);
-              }
-              foundAny = true;
-            }
-          } catch {}
+        const rawW = localStorage.getItem("bryllup3:weddings");
+        const rawU = localStorage.getItem("bryllup3:users");
+        if (rawW) setWeddings(() => ({...JSON.parse(rawW), [DEMO_WEDDING_ID]: DEMO_WDATA}));
+        if (rawU) {
+          const custom = JSON.parse(rawU).filter(u => !DEMO_USER_IDS.has(u.id));
+          setUsers([...DEMO_USERS, ...custom]);
         }
       } catch {}
-
-      // Also try artifact storage if localStorage had nothing
-      if (!foundAny && typeof window.storage !== "undefined") {
-        try {
-          // Use a timeout so we never hang forever
-          const withTimeout = (promise, ms) =>
-            Promise.race([promise, new Promise(r => setTimeout(r, ms))]);
-          for (const k of keys) {
-            try {
-              const r = await withTimeout(window.storage.get("app3:"+k), 2000);
-              if (r?.value) setters[k](JSON.parse(r.value));
-            } catch {}
+      // 2. Supabase (henter fersk data)
+      try {
+        const { data: weddingRows } = await supabase.from("weddings").select("*");
+        if (weddingRows?.length) {
+          const wMap = {};
+          for (const w of weddingRows) {
+            const [tasks, guests, budget, vendors] = await Promise.all([
+              supabase.from("tasks").select("*").eq("wedding_id", w.id),
+              supabase.from("guests").select("*").eq("wedding_id", w.id),
+              supabase.from("budget").select("*").eq("wedding_id", w.id),
+              supabase.from("vendors").select("*").eq("wedding_id", w.id),
+            ]);
+            wMap[w.id] = {
+              wedding: w,
+              tasks: tasks.data || [],
+              guests: guests.data || [],
+              budget: budget.data || [],
+              vendors: vendors.data || [],
+              giftList: [], photoList: [], songList: [],
+              guestbookList: [], bookingList: [], contracts: [], vendorChats: {},
+            };
           }
-        } catch {}
-      }
+          setWeddings(prev => ({...prev, ...wMap, [DEMO_WEDDING_ID]: DEMO_WDATA}));
+        }
+      } catch(e) { console.error("Supabase hydrate error:", e); }
     };
 
     hydrate();
