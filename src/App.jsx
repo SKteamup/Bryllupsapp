@@ -6017,6 +6017,7 @@ const DEMO_USERS = [
   {id:"u6", username:"lysebu",     password:"hotell123",    role:"vendor",  name:"Trine Solberg",  vendorId:"v101", vendorName:"Lysebu Hotell",    category:"Lokale"},
   {id:"u7", username:"haugen",     password:"kake123",      role:"vendor",  name:"Per Haugen",     vendorId:"v110", vendorName:"Konditori Haugen", category:"Kake"},
   {id:"u8", username:"gjest",      password:"gjest123",     role:"guest",   name:"Gjest",          weddingId:"w_demo_sophie"},
+{id:"u_test_1", username:"kristian", password:"bryllup2026", role:"planner", name:"Kristian", weddingId:"w_test_1"},
 ];
 const DEMO_USER_IDS = new Set(["u1","u2","u3","u4","u5","u6","u7","u8"]);
 
