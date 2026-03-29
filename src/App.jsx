@@ -1239,11 +1239,12 @@ function Guests({ guests, setGuests, showToast, wedding }) {
   const toggleSel = (id) => setSelected(s => s.includes(id) ? s.filter(x=>x!==id) : [...s,id]);
   const openNew  = () => { setDraft({id:"g_"+Date.now(),first_name:"",last_name:"",email:"",phone:"",relation_category:"Venner",side_of_couple:"felles",rsvp_status:"not_invited",allergies:"",special_needs:"",plus_one_allowed:false,plus_one_name:"",notes:""}); setEditSheet(true); };
   const openEdit = (g) => { if (selMode){toggleSel(g.id);return;} setDraft({...g,side_of_couple:g.side_of_couple||"felles"}); setEditSheet(true); };
-  const save = () => {
+const save = () => {
     if (!draft.first_name.trim()) return;
     if (guests.find(g=>g.id===draft.id)){ setGuests(p=>p.map(g=>g.id===draft.id?draft:g)); showToast("Gjest oppdatert"); }
     else { setGuests(p=>[...p,draft]); showToast(`${draft.first_name} lagt til`); }
     setEditSheet(false);
+    setTimeout(()=>doSave(), 300);
   };
   const del = () => { setGuests(p=>p.filter(g=>g.id!==draft.id)); setEditSheet(false); showToast("Gjest fjernet"); };
 
@@ -6160,6 +6161,7 @@ const effectiveWeddings = {
     } catch {}
     try {
       const wid = activeWeddingId;
+      console.log("doSave wid:", wid, "weddings:", Object.keys(d.weddings||{}));
       if (!wid || wid === "w_demo_sophie") return;
       const w = d.weddings?.[wid];
       if (!w) return;
