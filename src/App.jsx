@@ -1237,7 +1237,7 @@ function Guests({ guests, setGuests, showToast, wedding }) {
   };
 
   const toggleSel = (id) => setSelected(s => s.includes(id) ? s.filter(x=>x!==id) : [...s,id]);
-  const openNew  = () => { setDraft({id:Date.now(),first_name:"",last_name:"",email:"",phone:"",relation_category:"Venner",side_of_couple:"felles",rsvp_status:"not_invited",allergies:"",special_needs:"",plus_one_allowed:false,plus_one_name:"",notes:""}); setEditSheet(true); };
+  const openNew  = () => { setDraft({id:"g_"+Date.now(),first_name:"",last_name:"",email:"",phone:"",relation_category:"Venner",side_of_couple:"felles",rsvp_status:"not_invited",allergies:"",special_needs:"",plus_one_allowed:false,plus_one_name:"",notes:""}); setEditSheet(true); };
   const openEdit = (g) => { if (selMode){toggleSel(g.id);return;} setDraft({...g,side_of_couple:g.side_of_couple||"felles"}); setEditSheet(true); };
   const save = () => {
     if (!draft.first_name.trim()) return;
