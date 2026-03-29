@@ -1135,7 +1135,7 @@ function Tasks({ tasks, setTasks, showToast }) {
 /* ═══════════════════════════════════════════════════════════
    GUESTS
 ═══════════════════════════════════════════════════════════ */
-function Guests({ guests, setGuests, showToast, wedding }) {
+function Guests({ guests, setGuests, showToast, wedding, doSave }) {
   const [filter,     setFilter]     = useState("Alle");
   const [sideFilter, setSideFilter] = useState("alle");
   const [search,     setSearch]     = useState("");
@@ -6278,7 +6278,7 @@ const effectiveWeddings = {
     switch(page) {
       case "home":     return <Dashboard wedding={wedding} tasks={tasks} guests={guests} budget={budget} vendors={vendors} setPage={setPage} showToast={showToast}/>;
       case "tasks":    return <Tasks tasks={tasks} setTasks={setTasks} showToast={showToast}/>;
-      case "guests":   return <Guests guests={guests} setGuests={setGuests} showToast={showToast} wedding={wedding}/>;
+      case "guests":   return <Guests guests={guests} setGuests={setGuests} showToast={showToast} wedding={wedding} doSave={doSave}/>;
       case "vendors":  return <Vendors vendors={vendors} setVendors={setVendors} showToast={showToast} wedding={wedding} chats={vendorChats} setChats={setVendorChats}/>;
       case "budget":   return <Budget budget={budget} setBudget={setBudget} wedding={wedding} showToast={showToast}/>;
       case "seating":  return <Seating guests={guests} showToast={showToast}/>;
