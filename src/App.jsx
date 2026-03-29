@@ -6224,7 +6224,7 @@ const effectiveWeddings = {
     if (!loaded) return;
     setSaveStatus("saving");
     const timer = setTimeout(async () => {
-      await doSave({ wedding, tasks, guests, budget, vendors, page });
+      await doSave({ weddings });
       setSaveStatus("saved");
     }, 200); // Short — 200ms is fast enough to not feel sluggish
     return () => clearTimeout(timer);
