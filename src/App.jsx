@@ -340,18 +340,18 @@ const INITIAL_BOOKINGS = [
 
 /* ─── VENDOR CATALOG ──────────────────────────────── */
 const VENDOR_CATEGORIES_FULL = [
-  {id:"lokale",    label:"Lokale",          icon:"🏛",  color:"#F0EDE8", desc:"Slott, hotell, gård, villa og mer"},
-  {id:"fotograf",  label:"Fotograf",         icon:"📷",  color:"#E8EDF5", desc:"Dokumentarisk, romantisk, editoriell"},
-  {id:"video",     label:"Video",            icon:"🎬",  color:"#EDE8F5", desc:"Bryllupsfilm, highlight, fullfilm"},
-  {id:"catering",  label:"Catering",         icon:"🍽",  color:"#F0F5E8", desc:"Meny, buffet, food truck, bartender"},
-  {id:"kake",      label:"Kake",             icon:"🎂",  color:"#F5EDE8", desc:"Bryllupskake, cupcakes, dessertbord"},
-  {id:"blomster",  label:"Blomster & dekor", icon:"💐",  color:"#F5E8EE", desc:"Buketter, borddekor, seremoni"},
-  {id:"musikk",    label:"DJ & musikk",      icon:"🎵",  color:"#E8F0F5", desc:"DJ, liveband, kvartet, jazzensemble"},
-  {id:"hår",       label:"Hår & makeup",     icon:"💄",  color:"#F5E8F0", desc:"Brudestylist, testtime, mobile artists"},
-  {id:"kjole",     label:"Kjole & dress",    icon:"👗",  color:"#EEE8F5", desc:"Brudesalong, tilpasning, utleie"},
-  {id:"transport", label:"Transport",        icon:"🚗",  color:"#E8F5EE", desc:"Limousin, veteranbil, buss, helikopter"},
-  {id:"planlegger",label:"Koordinator",      icon:"📋",  color:"#F5F0E8", desc:"Wedding planner, day-of koordinator"},
-  {id:"annet",     label:"Annet",            icon:"✦",   color:"#EDEDEE", desc:"Underholdning, lysshow, fotoboks m.m."},
+  {id:"lokale",     label:"Lokale",          icon:"◈", color:"#F5EDE8", desc:"Slott, hotell, gård og unike steder"},
+  {id:"fotograf",   label:"Fotograf",         icon:"◈", color:"#F5EDE8", desc:"Dokumentarisk og kunstnerisk fotografering"},
+  {id:"video",      label:"Video",            icon:"◈", color:"#F5EDE8", desc:"Bryllupsfilm og høydepunktsvideoer"},
+  {id:"catering",   label:"Catering",         icon:"◈", color:"#F5EDE8", desc:"Meny, buffet og drikkeservering"},
+  {id:"kake",       label:"Kake",             icon:"◈", color:"#F5EDE8", desc:"Bryllupskake og dessertbord"},
+  {id:"blomster",   label:"Blomster & dekor", icon:"◈", color:"#F5EDE8", desc:"Buketter, bordpynt og dekorasjon"},
+  {id:"musikk",     label:"DJ & musikk",      icon:"◈", color:"#F5EDE8", desc:"DJ, liveband og musikere"},
+  {id:"hår",        label:"Hår & makeup",     icon:"◈", color:"#F5EDE8", desc:"Brudestylist og skjønnhet"},
+  {id:"kjole",      label:"Kjole & dress",    icon:"◈", color:"#F5EDE8", desc:"Brudesalong og herreklær"},
+  {id:"transport",  label:"Transport",        icon:"◈", color:"#F5EDE8", desc:"Limousin, veteranbil og shuttlebuss"},
+  {id:"planlegger", label:"Koordinator",      icon:"◈", color:"#F5EDE8", desc:"Wedding planner og koordinator"},
+  {id:"annet",      label:"Annet",            icon:"◈", color:"#F5EDE8", desc:"Underholdning og andre tjenester"},
 ];
 
 const DEMO_VENDOR_CATALOG = [
@@ -5880,7 +5880,8 @@ const Sidebar = React.memo(function Sidebar({ page, setPage, wedding, tasks, sav
         <div style={{display:"flex",background:"rgba(255,255,255,.08)",borderRadius:20,padding:2}}>
           <button onClick={()=>setMode("planner")} style={{flex:1,padding:"7px 8px",borderRadius:18,border:"none",background:mode==="planner"?"var(--ivory)":"transparent",color:mode==="planner"?"var(--text)":"rgba(255,255,255,.4)",fontSize:10,cursor:"pointer",fontFamily:"'Inter',sans-serif",fontWeight:600,transition:"all .15s"}}>Planner</button>
           <button onClick={()=>setMode("guest")}   style={{flex:1,padding:"7px 8px",borderRadius:18,border:"none",background:mode==="guest"?"var(--bronze)":"transparent",color:mode==="guest"?"white":"rgba(255,255,255,.4)",fontSize:10,cursor:"pointer",fontFamily:"'Inter',sans-serif",fontWeight:600,transition:"all .15s"}}>Gjest</button>
-          <button onClick={()=>setMode("vendor")}  style={{flex:1,padding:"7px 8px",borderRadius:18,border:"none",background:mode==="vendor"?"#5A4A80":"transparent",color:mode==="vendor"?"white":"rgba(255,255,255,.4)",fontSize:10,cursor:"pointer",fontFamily:"'Inter',sans-serif",fontWeight:600,transition:"all .15s"}}>Lev.</button>
+          <button onClick={()=>setMode("vendor")}  style={{flex:1,padding:"7px 8px",borderRadius:18,border:"none",background:mode==="vendor"?"#5A4A80":"transparent",color:mode==="vendor"?"white":"rgba(255,255,255,.4)",fontSize:10,cursor:"pointer",fontFamily:"'Inter',sans-serif",fontWeight:600,transition:"all .15s"}}>Leverandør</
+/button>
         </div>
       </div>
       <div style={{flex:1,overflowY:"auto",paddingBottom:8}}>
