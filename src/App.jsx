@@ -6044,9 +6044,15 @@ const [currentUser, setCurrentUser] = useState(() => {
   const activeWeddingId = currentUser?.weddingId || null;
   // Always ensure demo wedding exists (in case storage cleared it)
   // Demo wedding is ALWAYS sourced from module-level constants — never localStorage
-  const effectiveWeddings = {
+const effectiveWeddings = {
     ...weddings,
-    [DEMO_WEDDING_ID]: DEMO_WDATA,  // always fresh demo data for Sophie & Marcus
+    [DEMO_WEDDING_ID]: DEMO_WDATA,
+    "w_test_1": weddings["w_test_1"] || {
+      wedding: {id:"w_test_1", invite_code:"TEST01", name1:"Kristian", name2:"Partner", display_name:"Kristian & Partner", date:"2026-06-21", country:"Norge", city:"Bergen", budget_total:250000, wedding_style:"romantisk"},
+      tasks: [], guests: [], budget: [], vendors: [],
+      giftList: [], photoList: [], songList: [],
+      guestbookList: [], bookingList: [], contracts: [], vendorChats: {},
+    },
   };
   const activeWData = activeWeddingId ? effectiveWeddings[activeWeddingId] : null;
 
