@@ -6144,26 +6144,26 @@ const [currentUser, setCurrentUser] = useState(() => {
     stateRef.current = { weddings, users };
   }, [wedding, tasks, guests, budget, vendors, page]);
 
-  /* ─── CORE SAVE FUNCTION ─── */
+/* ─── CORE SAVE FUNCTION ─── */
   const doSave = useCallback(async (data) => {
     const d = data || stateRef.current;
-    // 1. window.storage (Claude artifact environment)
-    if (typeof window.storage !== "undefined") {
-      try {
-        await Promise.all(
-          Object.entries(d).map(([k,v]) =>
-            window.storage.set("app3:"+k, JSON.stringify(v)).catch(()=>{})
-          )
-        );
-      } catch {}
-    }
-    // 2. localStorage (always, as backup + for deployed Vite app)
     try {
       Object.entries(d).forEach(([k,v]) => {
         try { localStorage.setItem("bryllup3:"+k, JSON.stringify(v)); } catch {}
       });
     } catch {}
-  }, []);
+    try {
+      const wid = activeWeddingId;
+      if (!wid || wid === "w_demo_sophie") return;
+      const w = d.weddings?.[wid];
+      if (!w) return;
+      if (w.wedding) await supabase.from("weddings").upsert({...w.wedding, id: wid});
+      if (w.guests)  await supabase.from("guests").upsert(w.guests.map(g=>({...g, wedding_id: wid})));
+      if (w.tasks)   await supabase.from("tasks").upsert(w.tasks.map(t=>({...t, wedding_id: wid})));
+      if (w.budget)  await supabase.from("budget").upsert(w.budget.map(b=>({...b, wedding_id: wid})));
+      if (w.vendors) await supabase.from("vendors").upsert(w.vendors.map(v=>({...v, wedding_id: wid})));
+    } catch(e) { console.error("Supabase save error:", e); }
+  }, [activeWeddingId]);
 
   /* ─── LOAD ON MOUNT ─── */
   useEffect(() => {
