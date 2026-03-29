@@ -5926,7 +5926,7 @@ const Sidebar = React.memo(function Sidebar({ page, setPage, wedding, tasks, sav
           <div className="sb-user-role" style={{color:saveStatus==="saving"?"rgba(255,255,255,.4)":"rgba(100,200,120,.7)"}}>
             {saveStatus==="saving" ? "Lagrer..." : "● Lagret"}
           </div>
-        </div>
+        <button onClick={()=>setCurrentUser(null)} style={{width:"100%",marginTop:8,padding:"8px",borderRadius:8,border:"1px solid rgba(255,255,255,.15)",background:"transparent",color:"rgba(255,255,255,.5)",cursor:"pointer",fontSize:11,fontFamily:"'Inter',sans-serif"}}>⇤ Logg ut</button>
       </div>
     </nav>
   );
